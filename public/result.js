@@ -1,4 +1,10 @@
 
+const userID = localStorage.getItem('uid');
+console.log(userID);
+if (!userID) {
+    window.location.href = '/error';
+}
+
 const data = JSON.parse(localStorage.getItem('result_data'));
 console.log(data);
 console.log(data["result"]);

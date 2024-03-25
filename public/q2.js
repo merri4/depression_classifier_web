@@ -1,3 +1,9 @@
+const userID = localStorage.getItem('uid');
+console.log(userID);
+if (!userID) {
+    window.location.href = '/error';
+}
+
 const baseUrl = 'http://175.45.194.237:8000/predict?';
 const age = localStorage.getItem('age');
 const gender = localStorage.getItem('gender');

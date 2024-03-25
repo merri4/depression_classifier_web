@@ -41,10 +41,6 @@ app.get("/result", (req, res) => {
     res.sendFile(__dirname + '/pages/result.html');
 })
 
-
-
-// 뭐 콜해주면
-// app.get("/Q1", ((request, response) => {
-//     response.sendFile("데이터")
-//     response.UplodaFile
-// })
+app.get("/error", (req, res) => {
+    res.sendFile(__dirname + '/pages/error.html');
+})

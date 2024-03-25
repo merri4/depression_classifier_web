@@ -5,6 +5,15 @@
 
 // https://os94.tistory.com/125
 
+
+// Retrieve the unique identifier from sessionStorage
+const userID = localStorage.getItem('uid');
+console.log(userID);
+if (!userID) {
+    window.location.href = '/error';
+}
+
+
 const baseUrl = 'http://175.45.194.237:8000/predict?';
 const age = localStorage.getItem('age');
 const gender = localStorage.getItem('gender');
@@ -21,46 +30,7 @@ const requestData = {
     key : key,
 };
 
-// console.log(requestData)
-
-
 var audioBlob;
-
-// function next_question(q_num) {
-
-//     uploadAudio(audioBlob);
-//     // setTimeout(() => console.log("Upload Done!"), 3000);
-
-//     if (q_num == 2) {
-//         window.location.href = '/q2';
-//     }
-//     else if (q_num === 3) {
-//         window.location.href = '/q3';
-//     }
-//     else if (q_num === 4) {
-//         window.location.href = '/q4';
-//     }
-//     else if (q_num === 5) {
-//         window.location.href = '/q5';
-//     }
-// }
-
-
-// function next_question(q_num) {
-//     return new Promise((resolve, reject) => {
-//         uploadAudio(audioBlob)
-//             .then(() => {
-//                 // Once the upload is completed, navigate to the next page
-//                 window.location.href = '/q2';
-//                 resolve(); // Resolve the Promise
-//             })
-//             .catch(error => {
-//                 // Handle any errors that occur during upload
-//                 console.error('Error uploading audio:', error);
-//                 reject(error); // Reject the Promise
-//             });
-//     });
-// }
 
 async function next_question() {
     try {
