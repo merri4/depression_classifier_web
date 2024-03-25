@@ -104,6 +104,24 @@ a {
     color: #333;
 }
 
+.result_probs {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 3rem;
+    margin-top: 3rem;
+}
+
+.result_index {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 3rem;
+    margin-bottom: 3rem;
+}
+
+.qall_result {
+    display: flex;
+}
+
 /* footer */
 
 .footer {

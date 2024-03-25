@@ -24,7 +24,7 @@ function redirectToMain() {
 function get_result() {
 
     uploadAudio(audioBlob);
-    window.location.href = '/result';
+    window.location.href = '/q_get';
 
 }
 
@@ -98,14 +98,14 @@ function get_nowtime() {
     return formattedDateTime;
 }
 
-function uploadAudio(blob) {
+async function uploadAudio(blob) {
     
     const formData = new FormData();
     formData.append('audio_file', blob);
     const apiUrl = baseUrl + "id=" + requestData["id"] + "&" + "age=" + requestData["age"] + "&" + "gender=" + requestData["gender"] + "&" + "question=" + requestData["question"] + "&" + "created_at=" + requestData["created_at"] + "&" + "key=" + requestData["key"];
     console.log(apiUrl)
 
-    fetch(apiUrl, {
+    const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {},
         body: formData,
@@ -123,5 +123,4 @@ function uploadAudio(blob) {
         .catch(error => {
             console.error('Error uploading audio:', error);
         });
-
 }

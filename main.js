@@ -33,6 +33,10 @@ app.get("/q5", (req, res) => {
     res.sendFile(__dirname + '/pages/q5.html');
 })
 
+app.get("/q_get", (req, res) => {
+    res.sendFile(__dirname + '/pages/q_get.html');
+})
+
 app.get("/result", (req, res) => {
     res.sendFile(__dirname + '/pages/result.html');
 })
