@@ -1,5 +1,5 @@
 function redirectToMain() {
-    window.location.href = '/index';
+    window.location.href = '/';
 }
 
 function next_question(q_num) {

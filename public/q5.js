@@ -1,5 +1,5 @@
 function redirectToMain() {
-    window.location.href = '/index';
+    window.location.href = '/';
 }
 
 function get_result() {
