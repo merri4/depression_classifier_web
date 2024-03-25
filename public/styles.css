@@ -118,6 +118,10 @@ a {
     margin-bottom: 3rem;
 }
 
+.result_probs > div {
+    color: #fff;
+}
+
 .qall_result {
     display: flex;
 }

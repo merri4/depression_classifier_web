@@ -16,6 +16,8 @@
     <!-- 제목 -->
     <title>우울증 테스트</title>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 </head>
 <body>
     <!-- 상단 -->
@@ -40,23 +42,16 @@
         </div>
 
         <!-- TODO : 플롯 넣기 -->
-        <div class="result_plot"></div>
+        <div class="result_plot">
+            <canvas id="myChart" width="400" height="400"></canvas>
+        </div>
 
-        
         <div class="result_probs">
             <div id="q1_prob"></div>
             <div id="q2_prob"></div>
             <div id="q3_prob"></div>
             <div id="q4_prob"></div>
             <div id="q5_prob"></div>
-        </div>
-
-        <div class="result_index">
-            <div id="q1_idx">1</div>
-            <div id="q2_idx">2</div>
-            <div id="q3_idx">3</div>
-            <div id="q4_idx">4</div>
-            <div id="q5_idx">5</div>
         </div>
 
         <div class="start">

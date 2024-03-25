@@ -111,6 +111,11 @@ a {
     margin-top: 3rem;
 }
 
+.result_probs > div {
+    color: #fff;
+}
+
+
 .result_index {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
