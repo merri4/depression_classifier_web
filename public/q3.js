@@ -1,8 +1,30 @@
+const baseUrl = 'http://175.45.194.237:8000/predict?';
+const age = localStorage.getItem('age');
+const gender = localStorage.getItem('gender');
+const uid = localStorage.getItem('uid');
+const key = localStorage.getItem('key');
+console.log(age, gender, uid);
+
+const requestData = {
+    id : uid,
+    age : age,
+    gender : gender,
+    question : 3,
+    created_at : get_nowtime(),
+    key : key,
+};
+
+var audioBlob;
+
+
 function redirectToMain() {
     window.location.href = '/';
 }
 
 function next_question(q_num) {
+
+    uploadAudio(audioBlob);
+
     if (q_num == 2) {
         window.location.href = '/q2';
     }
@@ -18,7 +40,6 @@ function next_question(q_num) {
 }
 
 let mediaRecorder;
-let recordedChunks = [];
 
 const startRecordingButton = document.getElementById('startRecording');
 const stopRecordingButton = document.getElementById('stopRecording');
@@ -28,6 +49,9 @@ startRecordingButton.addEventListener('click', startRecording);
 stopRecordingButton.addEventListener('click', stopRecording);
 
 function startRecording() {
+    
+    let recordedChunks = [];
+
     navigator.mediaDevices.getUserMedia({ audio: true })
         .then(stream => {
         mediaRecorder = new MediaRecorder(stream);
@@ -41,7 +65,7 @@ function startRecording() {
         };
 
         mediaRecorder.onstop = () => {
-            const audioBlob = new Blob(recordedChunks, { type: 'audio/wav' });
+            audioBlob = new Blob(recordedChunks, { type: 'audio/wav' });
             const audioUrl = URL.createObjectURL(audioBlob);
             audioPlayback.src = audioUrl;
         };
@@ -55,4 +79,44 @@ function stopRecording() {
     mediaRecorder.stop();
     startRecordingButton.disabled = false;
     stopRecordingButton.disabled = true;
+}
+
+function get_nowtime() {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    // const hours = String(now.getHours()).padStart(2, '0');
+    // const minutes = String(now.getMinutes()).padStart(2, '0');
+    // const seconds = String(now.getSeconds()).padStart(2, '0');
+    const formattedDateTime = `${year}${month}${day}`;
+    return formattedDateTime;
+}
+
+function uploadAudio(blob) {
+    
+    const formData = new FormData();
+    formData.append('audio_file', blob);
+    const apiUrl = baseUrl + "id=" + requestData["id"] + "&" + "age=" + requestData["age"] + "&" + "gender=" + requestData["gender"] + "&" + "question=" + requestData["question"] + "&" + "created_at=" + requestData["created_at"] + "&" + "key=" + requestData["key"];
+    console.log(apiUrl)
+
+    fetch(apiUrl, {
+        method: 'POST',
+        headers: {},
+        body: formData,
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            console.log("Request Done.");
+            return response.json();
+        })
+        .then(data => {
+            console.log('Audio upload successful:', data);
+        })
+        .catch(error => {
+            console.error('Error uploading audio:', error);
+        });
+
 }

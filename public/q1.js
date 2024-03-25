@@ -6,11 +6,10 @@
 // https://os94.tistory.com/125
 
 const baseUrl = 'http://175.45.194.237:8000/predict?';
-
 const age = localStorage.getItem('age');
 const gender = localStorage.getItem('gender');
 const uid = localStorage.getItem('uid');
-
+const key = localStorage.getItem('key');
 console.log(age, gender, uid);
 
 const requestData = {
@@ -19,10 +18,10 @@ const requestData = {
     gender : gender,
     question : 1,
     created_at : get_nowtime(),
-    key : "Wlkdsf1ljwdo",
+    key : key,
 };
 
-console.log(requestData)
+// console.log(requestData)
 
 
 var audioBlob;
@@ -59,7 +58,6 @@ function get_nowtime() {
 
 
 let mediaRecorder;
-let recordedChunks = [];
 
 const startRecordingButton = document.getElementById('startRecording');
 const stopRecordingButton = document.getElementById('stopRecording');
@@ -69,6 +67,9 @@ startRecordingButton.addEventListener('click', startRecording);
 stopRecordingButton.addEventListener('click', stopRecording);
 
 function startRecording() {
+
+    let recordedChunks = [];
+
     navigator.mediaDevices.getUserMedia({ audio: true })
         .then(stream => {
         mediaRecorder = new MediaRecorder(stream);
