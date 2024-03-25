@@ -21,20 +21,38 @@ function redirectToMain() {
     window.location.href = '/';
 }
 
-function next_question(q_num) {
+async function next_question() {
+    try {
+        const formData = new FormData();
+        formData.append('audio_file', audioBlob);
+        console.log("fomrdata ready")
 
-    uploadAudio(audioBlob);
+        const apiUrl = baseUrl + "id=" + requestData["id"] + "&" + "age=" + requestData["age"] + "&" + "gender=" + requestData["gender"] + "&" + "question=" + requestData["question"] + "&" + "created_at=" + requestData["created_at"] + "&" + "key=" + requestData["key"];
+        console.log(apiUrl)
+    
+        await fetch(apiUrl, {
+            method: 'POST',
+            headers: {},
+            body: formData,
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                console.log("Request Done.");
+                return response.json();
+            })
+            .then(data => {
+                console.log('Audio upload successful:', data);
+            })
+            .catch(error => {
+                console.error('Error uploading audio:', error);
+            });
+        
+        window.location.href = '/q5';
 
-    if (q_num == 2) {
-        window.location.href = '/q2';
-    }
-    else if (q_num === 3) {
-        window.location.href = '/q3';
-    }
-    else if (q_num === 4) {
-        window.location.href = '/q4';
-    }
-    else if (q_num === 5) {
+    } catch (error) {
+        console.error('Error uploading audio:', error);
         window.location.href = '/q5';
     }
 }

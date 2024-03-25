@@ -15,8 +15,8 @@ function Start() {
     // todo : 세션 ID를 통해 UID 발급
     // const sessions = new Map();
     // const sessionId = req.cookies.sessionId;
-    uid = "temptemptemp";
-    key = "Wlkdsf1ljwdo";
+    uid = "testtesttest";
+    key = "lifesaver12";
     
     console.log(age, gender, uid)
 

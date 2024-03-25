@@ -26,23 +26,78 @@ const requestData = {
 
 var audioBlob;
 
-function next_question(q_num) {
+// function next_question(q_num) {
 
-    uploadAudio(audioBlob);
+//     uploadAudio(audioBlob);
+//     // setTimeout(() => console.log("Upload Done!"), 3000);
 
-    if (q_num == 2) {
+//     if (q_num == 2) {
+//         window.location.href = '/q2';
+//     }
+//     else if (q_num === 3) {
+//         window.location.href = '/q3';
+//     }
+//     else if (q_num === 4) {
+//         window.location.href = '/q4';
+//     }
+//     else if (q_num === 5) {
+//         window.location.href = '/q5';
+//     }
+// }
+
+
+// function next_question(q_num) {
+//     return new Promise((resolve, reject) => {
+//         uploadAudio(audioBlob)
+//             .then(() => {
+//                 // Once the upload is completed, navigate to the next page
+//                 window.location.href = '/q2';
+//                 resolve(); // Resolve the Promise
+//             })
+//             .catch(error => {
+//                 // Handle any errors that occur during upload
+//                 console.error('Error uploading audio:', error);
+//                 reject(error); // Reject the Promise
+//             });
+//     });
+// }
+
+async function next_question() {
+    try {
+        const formData = new FormData();
+        formData.append('audio_file', audioBlob);
+        console.log("fomrdata ready")
+
+        const apiUrl = baseUrl + "id=" + requestData["id"] + "&" + "age=" + requestData["age"] + "&" + "gender=" + requestData["gender"] + "&" + "question=" + requestData["question"] + "&" + "created_at=" + requestData["created_at"] + "&" + "key=" + requestData["key"];
+        console.log(apiUrl)
+    
+        await fetch(apiUrl, {
+            method: 'POST',
+            headers: {},
+            body: formData,
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                console.log("Request Done.");
+                return response.json();
+            })
+            .then(data => {
+                console.log('Audio upload successful:', data);
+            })
+            .catch(error => {
+                console.error('Error uploading audio:', error);
+            });
+        
+        window.location.href = '/q2';
+
+    } catch (error) {
+        console.error('Error uploading audio:', error);
         window.location.href = '/q2';
     }
-    else if (q_num === 3) {
-        window.location.href = '/q3';
-    }
-    else if (q_num === 4) {
-        window.location.href = '/q4';
-    }
-    else if (q_num === 5) {
-        window.location.href = '/q5';
-    }
 }
+
 
 function get_nowtime() {
     const now = new Date();
@@ -99,45 +154,6 @@ function stopRecording() {
     mediaRecorder.stop();
     startRecordingButton.disabled = false;
     stopRecordingButton.disabled = true;
-}
-
-function uploadAudio(blob) {
-    
-    const formData = new FormData();
-    // const file = new File([blob], "test.wav", {lastModified: Date.now});
-    formData.append('audio_file', blob);
-
-    const apiUrl = baseUrl + "id=" + requestData["id"] + "&" + "age=" + requestData["age"] + "&" + "gender=" + requestData["gender"] + "&" + "question=" + requestData["question"] + "&" + "created_at=" + requestData["created_at"] + "&" + "key=" + requestData["key"];
-    console.log(apiUrl)
-    console.log(formData)
-
-    // const config = {
-    //     headers: { 'content-type': 'multipart/form-data' }
-    // }
-    // axios.post(apiUrl, formData, config)
-
-    fetch(apiUrl, {
-        method: 'POST',
-        headers: {
-            // 'Content-Type': 'multipart/form-data'
-          },
-        body: formData,
-    })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            console.log("Request Done.");
-            return response.json();
-            // 리턴 처리
-        })
-        .then(data => {
-            console.log('Audio upload successful:', data);
-        })
-        .catch(error => {
-            console.error('Error uploading audio:', error);
-        });
-
 }
 
 function redirectToMain() {
